@@ -86,7 +86,7 @@ let
     (linuxKernel.manualConfig rec {
       inherit stdenv lib;
 
-      version = "6.11.0-asahi";
+      version = "6.11.2-asahi";
       modDirVersion = version;
       extraMeta.branch = "6.11";
 
@@ -94,8 +94,8 @@ let
         # tracking: https://github.com/AsahiLinux/linux/tree/asahi-wip (w/ fedora verification)
         owner = "AsahiLinux";
         repo = "linux";
-        rev = "asahi-6.11-2";
-        hash = "sha256-l8CB1+YviBNUzWVP054+Q0ckhISCHt3xJZLMFm3K3PQ=";
+        rev = "asahi-6.11.2-1";
+        hash = "sha256-lhYlHvNHQgDCVQUHJDAbOuUYGXdHxdDCRDReS4GmOko=";
       };
 
       kernelPatches = [
