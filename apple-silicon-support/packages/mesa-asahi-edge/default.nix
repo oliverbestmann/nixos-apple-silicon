@@ -8,21 +8,21 @@
 # don't bother to provide Darwin deps
 ((pkgs.callPackage ./vendor { OpenGL = null; Xplugin = null; }).override {
   galliumDrivers = [ "swrast" "asahi" ];
-  vulkanDrivers = [ "swrast" ];
+  vulkanDrivers = [ "swrast" "asahi" ];
   enableGalliumNine = false;
   # libclc and other OpenCL components are needed for geometry shader support on Apple Silicon
   enableOpenCL = true;
 }).overrideAttrs (oldAttrs: {
   # version must be the same length (i.e. no unstable or date)
   # so that system.replaceRuntimeDependencies can work
-  version = "24.2.0";
+  version = "24.2.3";
   src = fetchFromGitLab {
     # tracking: https://pagure.io/fedora-asahi/mesa/commits/asahi
     domain = "gitlab.freedesktop.org";
     owner = "asahi";
     repo = "mesa";
-    rev = "asahi-20240930";
-    hash = "sha256-Z9WVvHc4orN7GPnubQ32pi2xxUc/3eriPxCCZlS4BwU=";
+    rev = "20241006";
+    hash = "sha256-8qZTN/AsWlifdN/ug4yVKeQRVpBGvba/rdspyp9dgRk=";
   };
 
   mesonFlags =
