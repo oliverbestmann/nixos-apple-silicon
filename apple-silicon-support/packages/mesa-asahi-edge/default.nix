@@ -1,8 +1,6 @@
 { lib
 , fetchFromGitLab
 , pkgs
-, meson
-, llvmPackages
 }:
 
 # don't bother to provide Darwin deps
@@ -15,20 +13,25 @@
 }).overrideAttrs (oldAttrs: {
   # version must be the same length (i.e. no unstable or date)
   # so that system.replaceRuntimeDependencies can work
-  version = "24.2.3";
+  version = "24.3.0";
+
   src = fetchFromGitLab {
     # tracking: https://pagure.io/fedora-asahi/mesa/commits/asahi
     domain = "gitlab.freedesktop.org";
     owner = "asahi";
     repo = "mesa";
-    rev = "20241006";
-    hash = "sha256-8qZTN/AsWlifdN/ug4yVKeQRVpBGvba/rdspyp9dgRk=";
+    rev = "asahi-20241101";
+    hash = "sha256-yXzP3nGMfajVgutxURjXlSAxDjUuUct1OuNA8724pEU=";
   };
 
   mesonFlags =
     # remove flag to configure xvmc functionality as having it
     # breaks the build because that no longer exists in Mesa 23
-    (lib.filter (x: !(lib.hasPrefix "-Dxvmc-libs-path=" x)) oldAttrs.mesonFlags) ++ [
+    (lib.filter (x: !(
+    (lib.hasPrefix "-Dxvmc-libs-path=" x)
+    || (lib.hasPrefix "-Ddri-search-path=" x)
+    || (lib.hasPrefix "-Domx-libs-path=" x)
+    )) oldAttrs.mesonFlags) ++ [
       # we do not build any graphics drivers these features can be enabled for
       "-Dgallium-va=disabled"
       "-Dgallium-vdpau=disabled"
