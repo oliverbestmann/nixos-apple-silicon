@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs = {
-      url = "github:nixos/nixpkgs?rev=edd7f434421aa1d00795cd77cdb404aa8839f00d";
+      url = "github:nixos/nixpkgs?rev=41dea55321e5a999b17033296ac05fe8a8b5a257";
     };
 
     rust-overlay = {
