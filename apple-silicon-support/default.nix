@@ -1,7 +1,8 @@
+{ pkgs-systemd-boot, ... }:
 { ... }:
 
 {
   imports = [
-    ./modules/default.nix
+    (import ./modules/default.nix { inherit pkgs-systemd-boot; })
   ];
 }

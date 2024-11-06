@@ -6,6 +6,12 @@
       url = "github:nixos/nixpkgs?rev=41dea55321e5a999b17033296ac05fe8a8b5a257";
     };
 
+    nixpkgs-systemd-boot = {
+        # pin the systemd version to one that can boot.
+        # See https://github.com/tpwrules/nixos-apple-silicon/issues/248 for more information
+        url = "github:nixos/nixpkgs?rev=41dea55321e5a999b17033296ac05fe8a8b5a257";
+    };
+
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       flake = false;
@@ -28,7 +34,9 @@
         };
 
         nixosModules = rec {
-          apple-silicon-support = ./apple-silicon-support;
+          apple-silicon-support = import ./apple-silicon-support {
+            pkgs-systemd-boot = import inputs.nixpkgs-systemd-boot {};
+          };
           default = apple-silicon-support;
         };
 
