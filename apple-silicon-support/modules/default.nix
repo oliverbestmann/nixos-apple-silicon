@@ -28,6 +28,9 @@
 
         {
             systemd.package = pkgs-systemd-boot.systemd;
+            environment.variables = {
+                GSK_RENDERER = "ngl";
+            } ;
         }
     ];
 
