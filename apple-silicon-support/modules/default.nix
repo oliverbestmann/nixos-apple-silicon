@@ -20,6 +20,13 @@
     lib.mkIf cfg.enable {
       nixpkgs.overlays = lib.mkBefore [ cfg.overlay ];
 
+      # recent gtk uses vulkan as a backend. on asahi the opengl
+      # driver seems to perform better than the vulkan part, so we
+      # fall back to opengl for gtk for now
+      environment.variables = {
+          GSK_RENDERER = "ngl";
+      } ;
+
       hardware.asahi.pkgs =
         if cfg.pkgsSystem != "aarch64-linux" then
           import (pkgs.path) {
