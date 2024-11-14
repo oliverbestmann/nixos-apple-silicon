@@ -13,6 +13,13 @@
     in lib.mkIf cfg.enable {
       nixpkgs.overlays = lib.mkBefore [ cfg.overlay ];
 
+      # recent gtk uses vulkan as a backend. on asahi the opengl
+      # driver seems to perform better than the vulkan part, so we
+      # fall back to opengl for gtk for now
+      environment.variables = {
+          GSK_RENDERER = "ngl";
+      } ;
+
       # patch systemd-boot to boot in Apple Silicon UEFI environment.
       # This regression only appeared in systemd 256.7.
       # see https://github.com/NixOS/nixpkgs/pull/355290
