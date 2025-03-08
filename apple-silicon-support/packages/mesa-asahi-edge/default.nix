@@ -17,6 +17,8 @@
     hash = "sha256-xt49IaylZYoH3LxYu6Uxd+qRrqQfjI6FDeAD8MLeWP8=";
   };
 
+  outputs = (builtins.filter (o: o != "cross_tools") oldAttrs.outputs);
+
   mesonFlags =
     let
       badFlags = [
