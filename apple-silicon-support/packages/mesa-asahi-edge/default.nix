@@ -1,7 +1,7 @@
-{
-  lib,
-  fetchFromGitLab,
-  mesa,
+{ lib
+, fetchFromGitLab
+, mesa
+,
 }:
 
 (mesa.override {
@@ -16,14 +16,14 @@
   ];
 }).overrideAttrs
   (oldAttrs: {
-    version = "25.1.0-asahi";
+    version = "25.1.5";
     src = fetchFromGitLab {
       # tracking: https://pagure.io/fedora-asahi/mesa/commits/asahi
       domain = "gitlab.freedesktop.org";
-      owner = "asahi";
+      owner = "mesa";
       repo = "mesa";
-      tag = "asahi-20250425";
-      hash = "sha256-3c3uewzKv5wL9BRwaVL4E3FnyA04veQwAPxfHiL7wII=";
+      tag = "mesa-25.1.5";
+      hash = "sha256-AZAd1/wiz8d0lXpim9obp6/K7ySP12rGFe8jZrc9Gl0=";
     };
 
     mesonFlags =
