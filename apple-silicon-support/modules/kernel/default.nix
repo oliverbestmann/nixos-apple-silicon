@@ -45,7 +45,7 @@
       "spi-hid-apple-of"
       "rtc-macsmc"
       "spmi-apple-controller"
-      "apple_spmi_nvmem"
+      "apple-spmi-nvmem"
       "apple-dockchannel"
       "dockchannel-hid"
       "apple-rtkit-helper"
