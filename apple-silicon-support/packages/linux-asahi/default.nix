@@ -133,7 +133,7 @@ let
         owner = "AsahiLinux";
         repo = "linux";
         rev = "asahi-6.15.6-1";
-        hash = "";
+        hash = "sha256-z8YZYoUoeD//dGYKk3FBeatRw/N4XVPY896Ivwh9kdk=";
       };
 
       kernelPatches = [
