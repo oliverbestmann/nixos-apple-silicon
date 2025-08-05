@@ -27,6 +27,12 @@
         formatting = outputs.formatter.${system};
       });
 
+      devShells = forAllSystems (system: {
+        default = inputs.nixpkgs.legacyPackages.${system}.mkShellNoCC {
+          packages = [ outputs.formatter.${system} ];
+        };
+      });
+
       overlays = {
         apple-silicon-overlay = import ./apple-silicon-support/packages/overlay.nix;
         default = outputs.overlays.apple-silicon-overlay;
