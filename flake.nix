@@ -14,6 +14,7 @@
   outputs =
     { self, ... }@inputs:
     let
+      inherit (self) outputs;
       # build platforms supported for uboot in nixpkgs
       systems = [
         "aarch64-linux"
@@ -39,14 +40,14 @@
         formatting = treefmtEval.${system}.config.build.check self;
       });
 
-      overlays = rec {
+      overlays = {
         apple-silicon-overlay = import ./apple-silicon-support/packages/overlay.nix;
-        default = apple-silicon-overlay;
+        default = outputs.overlays.apple-silicon-overlay;
       };
 
-      nixosModules = rec {
+      nixosModules = {
         apple-silicon-support = ./apple-silicon-support;
-        default = apple-silicon-support;
+        default = outputs.nixosModules.apple-silicon-support;
       };
 
       packages = forAllSystems (
@@ -56,7 +57,7 @@
             crossSystem.system = "aarch64-linux";
             localSystem.system = system;
             overlays = [
-              self.overlays.default
+              outputs.overlays.default
             ];
           };
         in
@@ -80,7 +81,7 @@
                 pkgs = import inputs.nixpkgs {
                   crossSystem.system = "aarch64-linux";
                   localSystem.system = system;
-                  overlays = [ self.overlays.default ];
+                  overlays = [ outputs.overlays.default ];
                 };
 
                 specialArgs = {
