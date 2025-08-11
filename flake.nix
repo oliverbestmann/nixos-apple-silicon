@@ -54,7 +54,6 @@
         {
           inherit (pkgs)
             uboot-asahi
-            asahi-fwextract
             ;
 
           linux-asahi = pkgs.linux-asahi.kernel;
