@@ -7,8 +7,6 @@
     };
 
     flake-compat.url = "github:nix-community/flake-compat";
-    treefmt-nix.url = "github:numtide/treefmt-nix";
-    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -22,22 +20,11 @@
       ]; # "i686-linux" omitted
 
       forAllSystems = inputs.nixpkgs.lib.genAttrs systems;
-
-      treefmtEval = forAllSystems (
-        system:
-        let
-          pkgs = inputs.nixpkgs.legacyPackages.${system};
-        in
-        inputs.treefmt-nix.lib.evalModule pkgs {
-          projectRootFile = "flake.nix";
-          programs.nixfmt.enable = true;
-        }
-      );
     in
     {
-      formatter = forAllSystems (system: treefmtEval.${system}.config.build.wrapper);
+      formatter = forAllSystems (system: inputs.nixpkgs.legacyPackages.${system}.nixfmt-tree);
       checks = forAllSystems (system: {
-        formatting = treefmtEval.${system}.config.build.check self;
+        formatting = outputs.formatter.${system};
       });
 
       overlays = {
