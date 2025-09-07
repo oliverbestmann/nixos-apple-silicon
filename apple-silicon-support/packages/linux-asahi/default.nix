@@ -1,10 +1,10 @@
-{
-  lib,
-  callPackage,
-  writeText,
-  linuxPackagesFor,
-  withRust ? true,
-  _kernelPatches ? [ ],
+{ lib
+, callPackage
+, writeText
+, linuxPackagesFor
+, withRust ? true
+, _kernelPatches ? [ ]
+,
 }:
 
 let
@@ -35,16 +35,17 @@ let
   # a list of k, v tuples
   parseExtraStructuredConfig =
     config:
-    lib.attrsets.mapAttrsToList (k: v: [
-      "CONFIG_${k}"
-      (v.tristate or v.freeform)
-    ]) config;
+    lib.attrsets.mapAttrsToList
+      (k: v: [
+        "CONFIG_${k}"
+        (v.tristate or v.freeform)
+      ])
+      config;
 
   parsePatchConfig =
-    {
-      extraConfig ? "",
-      extraStructuredConfig ? { },
-      ...
+    { extraConfig ? ""
+    , extraStructuredConfig ? { }
+    , ...
     }:
     (parseExtraConfig extraConfig) ++ (parseExtraStructuredConfig extraStructuredConfig);
 
@@ -71,15 +72,14 @@ let
   origConfigfile = ./config;
 
   linux-asahi-pkg =
-    {
-      stdenv,
-      lib,
-      fetchFromGitHub,
-      fetchpatch,
-      linuxKernel,
-      rustc,
-      rust-bindgen,
-      ...
+    { stdenv
+    , lib
+    , fetchFromGitHub
+    , fetchpatch
+    , linuxKernel
+    , rustc
+    , rust-bindgen
+    , ...
     }@args:
     let
       origConfigText = builtins.readFile origConfigfile;
@@ -124,16 +124,16 @@ let
     linuxKernel.manualConfig rec {
       inherit stdenv lib;
 
-      version = "6.15.10-asahi";
+      version = "6.16.5-asahi";
       modDirVersion = version;
-      extraMeta.branch = "6.15";
+      extraMeta.branch = "6.16";
 
       src = fetchFromGitHub {
         # tracking: https://github.com/AsahiLinux/linux/tree/asahi-wip (w/ fedora verification)
         owner = "AsahiLinux";
         repo = "linux";
-        tag = "asahi-6.15.10-3";
-        hash = "sha256-au/v0bLzBaAMscfk47MZpyiG8pomw08qlT1RjVO9/x4=";
+        tag = "asahi-6.16.5-1";
+        hash = "sha256-Qwutmnqiv2A+z81nN/m08msWAgw0lOPdB58iIjZGNWM=";
       };
 
       kernelPatches = [
