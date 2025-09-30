@@ -10,7 +10,7 @@ on:
 
 jobs:
   packages:
-    runs-on: namespace-profile-default-arm64
+    runs-on: namespace-profile-large-arm64
     continue-on-error: true
     strategy: &strategy
       # avoid building things twice if nixos-unstable and master contain the same derivations
@@ -29,6 +29,9 @@ jobs:
     steps: &steps
     - name: Checkout repository
       uses: actions/checkout@v5
+    - uses: namespacelabs/nscloud-cache-action@v1
+      with:
+        path: ~/.cache/nix
     - name: Install nix
       uses: cachix/install-nix-action@v31
       with:
@@ -51,7 +54,7 @@ jobs:
   # Also populate the cache for cross-compilation from x86_64 case
   # Do this as a separate matrix job, so that the max-parallel applies per architecture
   packages-cross:
-    runs-on: namespace-profile-default
+    runs-on: namespace-profile-large-x86
     continue-on-error: true
     strategy: *strategy
     steps: *steps
