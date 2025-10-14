@@ -7,7 +7,9 @@
 let
   pkgs' = config.hardware.asahi.pkgs;
 
-  bootM1n1 = pkgs'.m1n1;
+  bootM1n1 = pkgs'.m1n1.override {
+    customLogo = config.boot.m1n1CustomLogo;
+  };
 
   bootUBoot = pkgs'.uboot-asahi.override {
     m1n1 = bootM1n1;
