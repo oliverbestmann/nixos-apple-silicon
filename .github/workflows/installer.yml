@@ -50,7 +50,10 @@ jobs:
         run: |
           # rest of the installer is downloaded and agglomerated and a few minor things are built
           nix build --extra-experimental-features 'nix-command flakes' .#installer-bootstrap -j2 -L
-          cp result/iso/*.iso $(basename result/iso/*.iso | sed s/aarch64-linux/apple-silicon-${{ github.ref_name }}/)
+
+          INSTALLER_DEST=$(basename result/iso/*.iso | sed 's:aarch64-linux:apple-silicon-${{ github.ref_name }}:' | tr '/' '-')
+          echo installer dest: "$INSTALLER_DEST"
+          cp result/iso/*.iso "$INSTALLER_DEST"
 
       - uses: actions/upload-artifact@v5
         with:
