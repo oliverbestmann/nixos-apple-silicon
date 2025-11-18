@@ -127,6 +127,12 @@
       util-linux = prev.util-linux.override {
         translateManpages = false;
       };
+
+      # avoids broken cross-compilation
+      # https://github.com/NixOS/nixpkgs/pull/460394/
+      libcap = prev.libcap.override {
+        withGo = false;
+      };
     })
   ];
 
