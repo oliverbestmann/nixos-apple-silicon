@@ -10,7 +10,7 @@ Please see the documentation and guide below to get started.
 
 * [Release Notes](docs/release-notes.md)
 * [Binary Cache](docs/binary-cache.md)
-* [Setup, Installation, and Maintenance Guide (2025-08-23)](docs/uefi-standalone.md)
+* [Setup, Installation, and Maintenance Guide (2025-11-18)](docs/uefi-standalone.md)
 
 ## Credits
 
